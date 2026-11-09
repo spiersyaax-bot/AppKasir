@@ -5,4 +5,10 @@
     <string name="hello_world">Hello world!</string>
 	<string name="drawer_buka">Buka</string>
 	<string name="drawer_tutup">Tutup</string>
+
+    <!-- Nama kasir, mudah diubah di satu tempat -->
+    <string name="kasir_nama">Joy</string>
+
+    <!-- Teks yang ditampilkan di header / struk -->
+    <string name="kasir_label">Kasir: %1$s</string>
 </resources>

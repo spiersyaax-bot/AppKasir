@@ -22,29 +22,39 @@ import android.content.*;
 
 public class MainActivity extends AppCompatActivity
 {
-	DrawerLayout mDrawer;
-	NavigationView nvDrawer;
-	ActionBarDrawerToggle drawerToggle;
-	Toolbar toolbar;
-	public static ProdukDataAdapter dataproduk;
-	public static BelanjaanDataAdapter dataBalanjaan;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		toolbar=(Toolbar) findViewById(R.id.mytoolbar);
-		setSupportActionBar(toolbar);
-		mDrawer=(DrawerLayout) findViewById(R.id.drawer_layout);
-		nvDrawer=(NavigationView) findViewById(R.id.naView);
-		setupDrawer(nvDrawer);
-		drawerToggle= setupDrawerToggle();
-		mDrawer.addDrawerListener(drawerToggle);
-		getSupportFragmentManager().beginTransaction().replace(R.id.konten, new belanjaFragment()).commit();
-		nvDrawer.getMenu().getItem(0).setChecked(true);
-		setTitle("Belanja");
-		reqPerms();
-		dataproduk=new ProdukDataAdapter(this, Produk.getInit(this));
-		dataBalanjaan=new BelanjaanDataAdapter(this);
+    DrawerLayout mDrawer;
+    NavigationView nvDrawer;
+    ActionBarDrawerToggle drawerToggle;
+    Toolbar toolbar;
+    public static ProdukDataAdapter dataproduk;
+    public static BelanjaanDataAdapter dataBalanjaan;
+
+    private String getKasirHeader() {
+        return getString(R.string.kasir_label, getString(R.string.kasir_nama));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        toolbar=(Toolbar) findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+
+        // Tampilkan Nama Kasir di header utama
+        toolbar.setTitle(getKasirHeader());
+
+        mDrawer=(DrawerLayout) findViewById(R.id.drawer_layout);
+        nvDrawer=(NavigationView) findViewById(R.id.naView);
+        setupDrawer(nvDrawer);
+        drawerToggle= setupDrawerToggle();
+        mDrawer.addDrawerListener(drawerToggle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.konten, new belanjaFragment()).commit();
+        nvDrawer.getMenu().getItem(0).setChecked(true);
+        setTitle(getKasirHeader());
+        reqPerms();
+        dataproduk=new ProdukDataAdapter(this, Produk.getInit(this));
+        dataBalanjaan=new BelanjaanDataAdapter(this);
     }
 	
 	private void reqPerms(){
