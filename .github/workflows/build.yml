@@ -1,0 +1,36 @@
+name: Build Debug APK
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+
+      - name: Build debug APK
+        working-directory: AppKasir
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: AppKasir/app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
